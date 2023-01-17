@@ -1,0 +1,25 @@
+---
+- name: Instalar pacotes
+  apt:
+    name: "{{ pacotes }}"
+    state: latest
+    update_cache: true
+
+- name: Definir o hostname
+  hostname:
+    name: "{{ hostname }}"
+
+- name: Registrar o novo hostname no arquivo /etc/hosts
+  replace:
+    path: /etc/hosts
+    regexp: 'ubuntu-focal'
+    replace: '"{{ hostname }}"'
+
+- name: Criar usuário
+  user:
+    name: "{{ usuario.nome }}"
+    create_home: "{{ usuario.criar_home }}"
+    password: "{{ usuario.senha }}"
+    group: "{{ usuario.grupo }}"
+    shell: "{{ usuario.shell_padrao }}"
+...

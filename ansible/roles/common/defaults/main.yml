@@ -1,0 +1,12 @@
+---
+pacotes: [vim, curl, telnet, unzip, wget, net-tools, htop, nmap]
+
+hostname: ubuntu
+
+usuario:
+  nome: miguel
+  criar_home: true
+  senha: $1$0GJre/eU$otkJf82sajuF7jpUWwDLy0 # Digite 123Mudar quando for fazer login com este usuário
+  grupo: vagrant
+  shell_padrao: /bin/bash
+...

@@ -1,0 +1,11 @@
+---
+- name: Instalar Nginx
+  apt:
+    name: nginx
+    state: latest
+
+- name: Implantar a aplicação web
+  copy:
+    src: site.html
+    dest: /var/www/html
+...
