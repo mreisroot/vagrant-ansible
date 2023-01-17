@@ -2,7 +2,7 @@
 - name: Instalar Nginx
   apt:
     name: nginx
-    state: latest
+    state: present
 
 - name: Implantar a aplicação web
   copy:
