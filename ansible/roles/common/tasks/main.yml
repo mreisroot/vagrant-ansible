@@ -1,9 +1,17 @@
 ---
+- name: Atualizar o cache
+  apt:
+    update_cache: true
+
+- name: Atualizar o SO
+  apt:
+    name: "*"
+    state: latest
+
 - name: Instalar pacotes
   apt:
     name: "{{ pacotes }}"
-    state: latest
-    update_cache: true
+    state: present
 
 - name: Definir o hostname
   hostname:
