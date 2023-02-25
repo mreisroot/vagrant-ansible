@@ -1,6 +1,6 @@
 Vagrant.configure("2") do |config|
 
-  # Definindo o provider, nome no VirtualBox e alocando recursos
+  # Definir provider e alocar recursos
   config.vm.provider "virtualbox" do |v|
     v.name = "vagrant_ansible"
     v.cpus = 1
@@ -8,27 +8,22 @@ Vagrant.configure("2") do |config|
     v.gui = false
   end
 
-  # Definindo o SO da VM
-  config.vm.box = "ubuntu/focal64"
-
-  # Configurando a rede
-
-  # Redirecionamento de portas
+  # Definir hostname, SO e rede
+  config.vm.hostname = "ubuntu"
+  config.vm.box = "ubuntu/jammy64"
   config.vm.network "forwarded_port", guest: 80, host: 8080
-
-  # Rede pública com ip estático
-  # Altere o ip estático de acordo com a sua rede
-  # Coloque um ip parecido com o da sua máquina física
-  config.vm.network "public_network", ip: "192.168.15.55"
+  config.vm.network "private_network", ip: "192.168.56.11"
 
   # Compartilhando a pasta que contém o playbook e as roles do Ansible
   config.vm.synced_folder "./ansible", "/ansible"
 
+  # Instalar o Ansible
+  config.vm.provision "shell", path: "provision.sh"
+
   # Instalando e executando o Ansible na VM
-  config.vm.provision "shell", inline: <<-'SHELL'
-    sudo apt update
-    sudo apt install -y ansible
-    ansible-playbook --connection=local /ansible/playbook.yml
-  SHELL
+  config.vm.provision "ansible_local" do |ansible|
+    ansible.provisioning_path = "/ansible"
+    ansible.playbook = "playbook.yml"
+  end
 
 end
