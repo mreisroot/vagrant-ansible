@@ -6,6 +6,6 @@
 
 - name: Implantar a aplicação web
   copy:
-    src: site.html
+    src: .
     dest: /var/www/html
 ...
